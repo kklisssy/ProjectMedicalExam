@@ -76,35 +76,110 @@ namespace ProjectMedicalExam
             }
 
             int enter = medicalExamHandler.EnterDate(entryDate);
+            var text = medicalExamHandler.GetCitizenshipAndPurposeNames();
+            Console.WriteLine(text);
 
-            var purposes = medicalExamHandler.GetPurposesNames();
-            Console.WriteLine("\nДоступные цели пребывания:");
-            for (int i = 0; i < purposes.Count; i++)
-                Console.WriteLine($"{i + 1}. {purposes[i]}");
-            Console.Write("Выберите цель пребывания: ");
+            var lines = text.Split(
+                new[] { Environment.NewLine },
+                StringSplitOptions.None);
 
-            if (!int.TryParse(Console.ReadLine(), out int purposeInd) || purposeInd < 1 || purposeInd > purposes.Count)
-{
-                Console.WriteLine("Некорректный выбор цели.");
+            var purposes = new List<string>();
+            var citizenships = new List<string>();
+
+            bool inPurposes = false;
+            bool inCitizenships = false;
+
+            foreach (var raw in lines)
+            {
+                var line = raw.Trim();
+                if (line.Length == 0) continue;
+
+                if (line == "Доступные цели пребывания:")
+                {
+                    inPurposes = true;
+                    inCitizenships = false;
+                    continue;
+                }
+
+                if (line == "Доступные гражданства:")
+                {
+                    inPurposes = false;
+                    inCitizenships = true;
+                    continue;
+                }
+
+                if (!inPurposes && !inCitizenships) continue;
+
+                int dotIndex = line.IndexOf('.');
+                if (dotIndex <= 0) continue;
+
+                string name = line.Substring(dotIndex + 1).Trim();
+
+                if (inPurposes) 
+                    purposes.Add(name);
+                else 
+                    citizenships.Add(name);
+            }
+
+            Console.Write("Выберите номер цели пребывания: ");
+            if (!int.TryParse(Console.ReadLine(), out int purposeInd))
+            {
+                Console.WriteLine("Введите число.");
                 return;
             }
+
+            if (purposeInd < 1 || purposeInd > purposes.Count)
+            {
+                Console.WriteLine("Введен некорректный номер цели.");
+                return;
+            }
+
+
+            Console.Write("Выберите номер гражданства: ");
+            if (!int.TryParse(Console.ReadLine(), out int citizenshipInd))
+            {
+                Console.WriteLine("Введите число.");
+                return;
+            }
+
+            if (citizenshipInd < 1 || citizenshipInd > citizenships.Count)
+            {
+                Console.WriteLine("Введен некорректный номер гражданства.");
+                return;
+            }
+
             var selectedPurpose = purposes[purposeInd - 1];
-
-            var citizenships = medicalExamHandler.GetCitizenshipsNames();
-            Console.WriteLine("\nДоступные гражданства:");
-            for (int i = 0; i < citizenships.Count; i++)
-                Console.WriteLine($"{i + 1}. {citizenships[i]}");
-            Console.Write("Выберите гражданство: ");
-
-            if (!int.TryParse(Console.ReadLine(), out int citizenshipInd) || citizenshipInd < 1 || citizenshipInd > citizenships.Count)
-{
-                Console.WriteLine("Некорректный выбор гражданства.");
-                return;
-            }
             var selectedCitizenship = citizenships[citizenshipInd - 1];
 
+
+            //            var purposes = medicalExamHandler.GetPurposesNames();
+            //            Console.WriteLine("\nДоступные цели пребывания:");
+            //            for (int i = 0; i < purposes.Count; i++)
+            //                Console.WriteLine($"{i + 1}. {purposes[i]}");
+            //            Console.Write("Выберите цель пребывания: ");
+
+            //            if (!int.TryParse(Console.ReadLine(), out int purposeInd) || purposeInd < 1 || purposeInd > purposes.Count)
+            //            {
+            //                Console.WriteLine("Некорректный выбор цели.");
+            //                return;
+            //            }
+            //            var selectedPurpose = purposes[purposeInd - 1];
+
+            //            var citizenships = medicalExamHandler.GetCitizenshipsNames();
+            //            Console.WriteLine("\nДоступные гражданства:");
+            //            for (int i = 0; i < citizenships.Count; i++)
+            //                Console.WriteLine($"{i + 1}. {citizenships[i]}");
+            //            Console.Write("Выберите гражданство: ");
+
+            //            if (!int.TryParse(Console.ReadLine(), out int citizenshipInd) || citizenshipInd < 1 || citizenshipInd > citizenships.Count)
+            //{
+            //                Console.WriteLine("Некорректный выбор гражданства.");
+            //                return;
+            //            }
+            //            var selectedCitizenship = citizenships[citizenshipInd - 1];
+
             string message = medicalExamHandler.GetMessage(selectedPurpose, selectedCitizenship, enter);
-            Console.WriteLine("\nДорожная карта: ");
+            Console.WriteLine("\nНаправление: ");
             Console.WriteLine(message);
         }
     }

@@ -25,20 +25,20 @@ namespace ProjectMedicalExam.Services
             return enter.EnterId;
         }
 
-        //public string GetCitizenshipAndPurposeNames()
+        public string GetCitizenshipAndPurposeNames()
+        {
+            return _ruleRepository.GetCitizenshipAndPurposeNames();
+        }
+
+        //public List<string> GetCitizenshipsNames()
         //{
-        //    return _ruleRepository.GetCitizenshipAndPurposeNames();
+        //    return _ruleRepository.GetCitizenshipsNames();
         //}
 
-        public List<string> GetCitizenshipsNames()
-        {
-            return _ruleRepository.GetCitizenshipsNames();
-        }
-
-        public List<string> GetPurposesNames()
-        {
-            return _ruleRepository.GetPurposesNames();
-        }
+        //public List<string> GetPurposesNames()
+        //{
+        //    return _ruleRepository.GetPurposesNames();
+        //}
 
         public string GetMessage(string stayPurposeName, string citizenshipName, int enterId)
         {

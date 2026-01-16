@@ -44,30 +44,32 @@ namespace ProjectMedicalExam.Repositories
 
         }
 
-        //public string GetCitizenshipAndPurposeNames()
+        public string GetCitizenshipAndPurposeNames()
+        {
+            var sb = new StringBuilder();
+
+            sb.AppendLine("\nДоступные цели пребывания:");
+            var purposes = _stayPurposeRepository.GetListPurposes();
+            for (int i = 0; i < purposes.Count; i++)
+                sb.AppendLine($"{i + 1}. {purposes[i].Name}");
+
+            sb.AppendLine("\nДоступные гражданства:");
+            var citizenships = _citizenshipRepository.GetListCitizenships();
+            for (int i = 0; i < citizenships.Count; i++)
+                sb.AppendLine($"{i + 1}. {citizenships[i].Name}");
+
+            return sb.ToString();
+        }
+
+        //public List<string> GetCitizenshipsNames()
         //{
-        //    var purposes = _stayPurposeRepository.GetAllNames();
-        //    var citizenships = _citizenshipRepository.GetAllNames();
-
-        //    var result = new StringBuilder();
-
-        //    result.AppendLine("Доступные цели пребывания:");
-        //    result.AppendLine(purposes);
-        //    result.AppendLine("\nДоступные гражданства:");
-        //    result.AppendLine(citizenships);
-            
-        //    return result.ToString();
+        //    return _citizenshipRepository.GetAllNames();
         //}
 
-        public List<string> GetCitizenshipsNames()
-        {
-            return _citizenshipRepository.GetAllNames();
-        }
-
-        public List<string> GetPurposesNames()
-        {
-            return _stayPurposeRepository.GetAllNames();
-        }
+        //public List<string> GetPurposesNames()
+        //{
+        //    return _stayPurposeRepository.GetAllNames();
+        //}
 
         public Rule GetRule(StayPurpose stayPurpose, Citizenship citizenship)
         {
