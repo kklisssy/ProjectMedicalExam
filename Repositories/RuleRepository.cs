@@ -61,16 +61,6 @@ namespace ProjectMedicalExam.Repositories
             return sb.ToString();
         }
 
-        //public List<string> GetCitizenshipsNames()
-        //{
-        //    return _citizenshipRepository.GetAllNames();
-        //}
-
-        //public List<string> GetPurposesNames()
-        //{
-        //    return _stayPurposeRepository.GetAllNames();
-        //}
-
         public Rule GetRule(StayPurpose stayPurpose, Citizenship citizenship)
         {
             return _rules.FirstOrDefault(r =>
