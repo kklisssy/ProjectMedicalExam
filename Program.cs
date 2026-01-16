@@ -76,7 +76,6 @@ namespace ProjectMedicalExam
             }
 
             int enter = medicalExamHandler.EnterDate(entryDate);
-            Console.WriteLine(enter);
             var text = medicalExamHandler.GetCitizenshipAndPurposeNames();
             Console.WriteLine(text);
 
@@ -151,33 +150,6 @@ namespace ProjectMedicalExam
 
             var selectedPurpose = purposes[purposeInd - 1];
             var selectedCitizenship = citizenships[citizenshipInd - 1];
-
-
-            //            var purposes = medicalExamHandler.GetPurposesNames();
-            //            Console.WriteLine("\nДоступные цели пребывания:");
-            //            for (int i = 0; i < purposes.Count; i++)
-            //                Console.WriteLine($"{i + 1}. {purposes[i]}");
-            //            Console.Write("Выберите цель пребывания: ");
-
-            //            if (!int.TryParse(Console.ReadLine(), out int purposeInd) || purposeInd < 1 || purposeInd > purposes.Count)
-            //            {
-            //                Console.WriteLine("Некорректный выбор цели.");
-            //                return;
-            //            }
-            //            var selectedPurpose = purposes[purposeInd - 1];
-
-            //            var citizenships = medicalExamHandler.GetCitizenshipsNames();
-            //            Console.WriteLine("\nДоступные гражданства:");
-            //            for (int i = 0; i < citizenships.Count; i++)
-            //                Console.WriteLine($"{i + 1}. {citizenships[i]}");
-            //            Console.Write("Выберите гражданство: ");
-
-            //            if (!int.TryParse(Console.ReadLine(), out int citizenshipInd) || citizenshipInd < 1 || citizenshipInd > citizenships.Count)
-            //{
-            //                Console.WriteLine("Некорректный выбор гражданства.");
-            //                return;
-            //            }
-            //            var selectedCitizenship = citizenships[citizenshipInd - 1];
 
             string message = medicalExamHandler.GetMessage(selectedPurpose, selectedCitizenship, enter);
             Console.WriteLine("\nНаправление: ");

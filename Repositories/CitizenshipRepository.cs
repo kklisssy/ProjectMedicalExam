@@ -12,15 +12,13 @@ namespace ProjectMedicalExam.Repositories
         private readonly List<Citizenship> _citizenships;
         public CitizenshipRepository()
         {
-            _citizenships = new List<Citizenship>
+            _citizenships = new List<Citizenship>();
+            string[] names = { "Азербайджан", "Армения", "Туркменистан", "Китай", "Казахстан", "Белорусь" };
+
+            foreach (var name in names)
             {
-                new Citizenship { Name = "Азербайджан" },
-                new Citizenship { Name = "Армения" },
-                new Citizenship { Name = "Туркменистан" },
-                new Citizenship { Name = "Китай" },
-                new Citizenship { Name = "Казахстан" },
-                new Citizenship { Name = "Белорусь" }
-            };
+                _citizenships.Add(new Citizenship { Name = name });
+            }
         }
 
         public List<Citizenship> GetListCitizenships() => _citizenships;

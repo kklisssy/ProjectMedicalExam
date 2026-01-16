@@ -12,14 +12,14 @@ namespace ProjectMedicalExam.Repositories
         private readonly List<StayPurpose> _purposes;
         public StayPurposeRepository()
         {
-            _purposes = new List<StayPurpose>
-            {
-                new StayPurpose { Name = "Трудовая деятельность" },
-                new StayPurpose { Name = "Иная деятельность" }
-            };
-        }
+            _purposes = new List<StayPurpose>();
+            string[] names = { "Трудовая деятельность", "Иная деятельность" };
 
-        public List<StayPurpose> GetListPurposes() => _purposes;
+            foreach (var name in names)
+            {
+                _purposes.Add(new StayPurpose { Name = name });
+            }
+        }
 
         public List<string> GetAllNames()
         {

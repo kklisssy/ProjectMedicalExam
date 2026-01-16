@@ -49,14 +49,14 @@ namespace ProjectMedicalExam.Repositories
             var sb = new StringBuilder();
 
             sb.AppendLine("\nДоступные цели пребывания:");
-            var purposes = _stayPurposeRepository.GetListPurposes();
+            var purposes = _stayPurposeRepository.GetAllNames();
             for (int i = 0; i < purposes.Count; i++)
-                sb.AppendLine($"{i + 1}. {purposes[i].Name}");
+                sb.AppendLine($"{i + 1}. {purposes[i]}");
 
             sb.AppendLine("\nДоступные гражданства:");
-            var citizenships = _citizenshipRepository.GetListCitizenships();
+            var citizenships = _citizenshipRepository.GetAllNames();
             for (int i = 0; i < citizenships.Count; i++)
-                sb.AppendLine($"{i + 1}. {citizenships[i].Name}");
+                sb.AppendLine($"{i + 1}. {citizenships[i]}");
 
             return sb.ToString();
         }
