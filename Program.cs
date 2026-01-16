@@ -76,6 +76,7 @@ namespace ProjectMedicalExam
             }
 
             int enter = medicalExamHandler.EnterDate(entryDate);
+            Console.WriteLine(enter);
             var text = medicalExamHandler.GetCitizenshipAndPurposeNames();
             Console.WriteLine(text);
 

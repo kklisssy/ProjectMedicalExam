@@ -30,16 +30,6 @@ namespace ProjectMedicalExam.Services
             return _ruleRepository.GetCitizenshipAndPurposeNames();
         }
 
-        //public List<string> GetCitizenshipsNames()
-        //{
-        //    return _ruleRepository.GetCitizenshipsNames();
-        //}
-
-        //public List<string> GetPurposesNames()
-        //{
-        //    return _ruleRepository.GetPurposesNames();
-        //}
-
         public string GetMessage(string stayPurposeName, string citizenshipName, int enterId)
         {
             return _ruleRepository.GetMessage(stayPurposeName, citizenshipName, enterId);

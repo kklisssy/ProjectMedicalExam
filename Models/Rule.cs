@@ -24,7 +24,7 @@ namespace ProjectMedicalExam.Models
             result.AppendLine($"Срок: {Days} дней");
             result.AppendLine($"Крайний срок: {deadline:dd.MM.yyyy}");
 
-            if (daysRemaining > 0)
+            if (daysRemaining >= 0)
             {
                 result.AppendLine($"На прохождение медицинского освидетельствования осталось дней: {daysRemaining}.");
                 result.AppendLine("Медицинские организации в которые можно обратиться:");

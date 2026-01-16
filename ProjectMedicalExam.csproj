@@ -55,7 +55,7 @@
     <Compile Include="Repositories\EnterRepository.cs" />
     <Compile Include="Repositories\RuleRepository.cs" />
     <Compile Include="Repositories\StayPurposeRepository.cs" />
-    <Compile Include="Services\MedicalExamHandler.cs" />
+    <Compile Include="Controllers\MedicalExamHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
