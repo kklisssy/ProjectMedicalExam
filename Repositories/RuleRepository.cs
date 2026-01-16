@@ -68,6 +68,7 @@ namespace ProjectMedicalExam.Repositories
 
         public string GetMessage(string stayPurposeName, string citizenshipName, int enterId)
         {
+            var enter = _enterRepository.GetEnterById(enterId);
             var purpose = _stayPurposeRepository.GetByName(stayPurposeName);
             if (purpose == null)
             {
@@ -81,7 +82,6 @@ namespace ProjectMedicalExam.Repositories
             }
 
             var rule = GetRule(purpose, citizenship);
-            var enter = _enterRepository.GetEnterById(enterId);
 
             return rule.BuildMessage(enter);
         }
