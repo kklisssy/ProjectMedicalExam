@@ -1,0 +1,111 @@
+﻿using ProjectMedicalExam.Models;
+using ProjectMedicalExam.Repositories;
+using ProjectMedicalExam.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ProjectMedicalExam
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.OutputEncoding = Encoding.UTF8;
+            Console.InputEncoding = Encoding.UTF8;
+
+            var enterRepository = new EnterRepository();
+            var stayPurposeRepository = new StayPurposeRepository();
+            var citizenshipRepository = new CitizenshipRepository();
+
+            var medicalDocument = new MedicalDocument
+            {
+                Name = "Медицинское освидетельствование",
+                Organizations = new List<MedicalOrganization>
+                {
+                    new MedicalOrganization
+                    {
+                        Name = "ОКБ №2",
+                        Address = "г. Тюмень, ул. Мельникайте, д. 75к3"
+                    },
+                    new MedicalOrganization
+                    {
+                        Name = "Городская поликлиника №3",
+                        Address = "г. Тюмень, ул. Ленина, д. 23С1"
+                    },
+                    new MedicalOrganization
+                    {
+                        Name = "Городская поликлиника №5",
+                        Address = "г. Тюмень, ул. Червишевский Тракт, д. 68А/1"
+                    },
+                    new MedicalOrganization
+                    {
+                        Name = "Городская поликлиника №6",
+                        Address = "г. Тюмень, ул. 50 лет ВЛКСМ, д. 97"
+                    },
+                    new MedicalOrganization
+                    {
+                        Name = "Городская поликлиника №12",
+                        Address = "г. Тюмень, ул. Пермякова, д. 76к1"
+                    }
+                }
+            };
+
+            var ruleRepository = new RuleRepository(stayPurposeRepository, citizenshipRepository, enterRepository, medicalDocument);
+
+            var medicalExamHandler = new MedicalExamHandler(enterRepository, ruleRepository);
+
+            GetRoadmap(medicalExamHandler);
+        }
+
+        static void GetRoadmap(MedicalExamHandler medicalExamHandler)
+        {
+            Console.Write("Ввведите дату въезда (дд.мм.гггг): ");
+            if (!DateTime.TryParse(Console.ReadLine(), out DateTime entryDate))
+            {
+                Console.WriteLine("Введена некорректная дата.");
+                return;
+            }
+
+            if (entryDate > DateTime.Now.Date)
+            {
+                Console.WriteLine("Дата въезда не может быть в будущем.");
+                return;
+            }
+
+            int enter = medicalExamHandler.EnterDate(entryDate);
+
+            var purposes = medicalExamHandler.GetPurposesNames();
+            Console.WriteLine("\nДоступные цели пребывания:");
+            for (int i = 0; i < purposes.Count; i++)
+                Console.WriteLine($"{i + 1}. {purposes[i]}");
+            Console.Write("Выберите цель пребывания: ");
+
+            if (!int.TryParse(Console.ReadLine(), out int purposeInd) || purposeInd < 1 || purposeInd > purposes.Count)
+{
+                Console.WriteLine("Некорректный выбор цели.");
+                return;
+            }
+            var selectedPurpose = purposes[purposeInd - 1];
+
+            var citizenships = medicalExamHandler.GetCitizenshipsNames();
+            Console.WriteLine("\nДоступные гражданства:");
+            for (int i = 0; i < citizenships.Count; i++)
+                Console.WriteLine($"{i + 1}. {citizenships[i]}");
+            Console.Write("Выберите гражданство: ");
+
+            if (!int.TryParse(Console.ReadLine(), out int citizenshipInd) || citizenshipInd < 1 || citizenshipInd > citizenships.Count)
+{
+                Console.WriteLine("Некорректный выбор гражданства.");
+                return;
+            }
+            var selectedCitizenship = citizenships[citizenshipInd - 1];
+
+            string message = medicalExamHandler.GetMessage(selectedPurpose, selectedCitizenship, enter);
+            Console.WriteLine("\nДорожная карта: ");
+            Console.WriteLine(message);
+        }
+    }
+}
