@@ -23,7 +23,6 @@ namespace ProjectMedicalExam.Repositories
 
             foreach (var citizenship in _citizenshipRepository.GetListCitizenships())
             {
-                //для трудовой деятельности - 30 дней
                 _rules.Add(new Rule
                 {
                     StayPurpose = _stayPurposeRepository.GetByName("Трудовая деятельность"),
@@ -32,7 +31,6 @@ namespace ProjectMedicalExam.Repositories
                     MedicalDocument = document
                 });
 
-                //для иной деятельности - 90 дней
                 _rules.Add(new Rule
                 {
                     StayPurpose = _stayPurposeRepository.GetByName("Иная деятельность"),
